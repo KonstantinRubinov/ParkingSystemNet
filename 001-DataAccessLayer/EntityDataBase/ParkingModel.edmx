@@ -1,0 +1,1732 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ParkingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPROVALS">
+          <Key>
+            <PropertyRef Name="approvalNumber" />
+          </Key>
+          <Property Name="approvalCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="approvalFrom" Type="datetime" Nullable="false" />
+          <Property Name="approvalUntil" Type="datetime" Nullable="false" />
+          <Property Name="approvalPersonId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="approvalNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="APPROVALTYPES">
+          <Key>
+            <PropertyRef Name="approvalCode" />
+          </Key>
+          <Property Name="approvalCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="approvalName" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BeforeCellphones">
+          <Key>
+            <PropertyRef Name="beforeCellphone" />
+          </Key>
+          <Property Name="beforeCellphone" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BeforeTelephones">
+          <Key>
+            <PropertyRef Name="beforeTelephone" />
+          </Key>
+          <Property Name="beforeTelephone" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="COURSES">
+          <Key>
+            <PropertyRef Name="courseCode" />
+          </Key>
+          <Property Name="courseCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="courseName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FACULTYS">
+          <Key>
+            <PropertyRef Name="facultyCode" />
+          </Key>
+          <Property Name="facultyCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="facultyName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="facultyHead" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERSONS">
+          <Key>
+            <PropertyRef Name="personId" />
+          </Key>
+          <Property Name="personId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="personFirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="personLastName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="personBeforeTelephone" Type="nvarchar" MaxLength="10" />
+          <Property Name="personTelephone" Type="nvarchar" MaxLength="30" />
+          <Property Name="personBeforeCellphone" Type="nvarchar" MaxLength="10" />
+          <Property Name="personCellphone" Type="nvarchar" MaxLength="30" />
+          <Property Name="personCode" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="STUDENTS">
+          <Key>
+            <PropertyRef Name="studentId" />
+          </Key>
+          <Property Name="studentId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="studentFacultyCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="studentYear" Type="int" Nullable="false" />
+          <Property Name="studentType" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TEACHERS">
+          <Key>
+            <PropertyRef Name="teacherId" />
+          </Key>
+          <Property Name="teacherId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="teacherFacultyCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="teacherStage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VEHICLES">
+          <Key>
+            <PropertyRef Name="vehicleNumber" />
+          </Key>
+          <Property Name="vehicleNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vehicleManufacturer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vehicleColor" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="vehicleOwnerId" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__APPROVALS__appro__4E88ABD4">
+          <End Role="APPROVALTYPES" Type="Self.APPROVALTYPES" Multiplicity="1" />
+          <End Role="APPROVALS" Type="Self.APPROVALS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPROVALTYPES">
+              <PropertyRef Name="approvalCode" />
+            </Principal>
+            <Dependent Role="APPROVALS">
+              <PropertyRef Name="approvalCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__APPROVALS__appro__4F7CD00D">
+          <End Role="PERSONS" Type="Self.PERSONS" Multiplicity="1" />
+          <End Role="APPROVALS" Type="Self.APPROVALS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="APPROVALS">
+              <PropertyRef Name="approvalPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__studen__59063A47">
+          <End Role="PERSONS" Type="Self.PERSONS" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__studen__59FA5E80">
+          <End Role="FACULTYS" Type="Self.FACULTYS" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENTS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTYS">
+              <PropertyRef Name="facultyCode" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="studentFacultyCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__teache__6754599E">
+          <End Role="PERSONS" Type="Self.PERSONS" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHERS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="teacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__teache__68487DD7">
+          <End Role="FACULTYS" Type="Self.FACULTYS" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTYS">
+              <PropertyRef Name="facultyCode" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="teacherFacultyCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLE__vehicle__47DBAE45">
+          <End Role="PERSONS" Type="Self.PERSONS" Multiplicity="1" />
+          <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="vehicleOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddApproval" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="approvalFrom" Type="datetime" Mode="In" />
+          <Parameter Name="approvalUntil" Type="datetime" Mode="In" />
+          <Parameter Name="approvalPersonId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddApprovalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="approvalName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddCellphone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeCellphone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="courseCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="courseName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddFaculty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="facultyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="facultyName" Type="nvarchar" Mode="In" />
+          <Parameter Name="facultyHead" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+          <Parameter Name="personFirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personLastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCode" Type="int" Mode="In" />
+          <Parameter Name="studentId" Type="nvarchar" Mode="In" />
+          <Parameter Name="studentFacultyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="studentYear" Type="int" Mode="In" />
+          <Parameter Name="studentType" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+          <Parameter Name="personFirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personLastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCode" Type="int" Mode="In" />
+          <Parameter Name="teacherId" Type="nvarchar" Mode="In" />
+          <Parameter Name="teacherFacultyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="teacherStage" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddTelephone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeTelephone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddVehicle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vehicleNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="vehicleManufacturer" Type="nvarchar" Mode="In" />
+          <Parameter Name="vehicleColor" Type="nvarchar" Mode="In" />
+          <Parameter Name="vehicleOwnerId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="checkIfIdExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteApprovalByNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteApprovalByPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalPersonId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteApprovalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteCellphone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeCellphone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="courseCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteFaculty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="facultyCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeletePerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teacherId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteTelephone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeTelephone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteVehicleByNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vehicleNumber" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteVehicleByOwnerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vehicleOwnerId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllApprovals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllApprovalTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllCellphones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllCourses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllFaculties" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllPersons" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllPersonsId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllTeachers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllTelephones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllVehicleNumbers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetAllVehicles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetOneApprovalByCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneApprovalByNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetOneApprovalByPersonId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalPersonId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneApprovalTypeByCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneApprovalTypeByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneBeforeCellphone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeCellphone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneBeforeTelephone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeTelephone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneCourseByCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="courseCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneCourseByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="courseName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneFacultyByCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="facultyCode" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneFacultyByHead" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="facultyHead" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneFacultyByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="facultyName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOnePersonById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneStudentById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="studentId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneTeacherById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="teacherId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneVehicleByNumber" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vehicleNumber" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneVehicleByOwnerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vehicleOwnerId" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateApproval" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="approvalFrom" Type="datetime" Mode="In" />
+          <Parameter Name="approvalUntil" Type="datetime" Mode="In" />
+          <Parameter Name="approvalPersonId" Type="nvarchar" Mode="In" />
+          <Parameter Name="approvalNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateApprovalType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="approvalCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="approvalName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateCellphone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeCellphone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateCourse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="courseCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="courseName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateFaculty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="facultyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="facultyName" Type="nvarchar" Mode="In" />
+          <Parameter Name="facultyHead" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateStudent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+          <Parameter Name="personFirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personLastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCode" Type="int" Mode="In" />
+          <Parameter Name="studentId" Type="nvarchar" Mode="In" />
+          <Parameter Name="studentFacultyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="studentYear" Type="int" Mode="In" />
+          <Parameter Name="studentType" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateTeacher" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="personId" Type="nvarchar" Mode="In" />
+          <Parameter Name="personFirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personLastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personTelephone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personBeforeCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCellphone" Type="nvarchar" Mode="In" />
+          <Parameter Name="personCode" Type="int" Mode="In" />
+          <Parameter Name="teacherId" Type="nvarchar" Mode="In" />
+          <Parameter Name="teacherFacultyCode" Type="nvarchar" Mode="In" />
+          <Parameter Name="teacherStage" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateTelephone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="beforeTelephone" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateVehicle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vehicleNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="vehicleManufacturer" Type="nvarchar" Mode="In" />
+          <Parameter Name="vehicleColor" Type="nvarchar" Mode="In" />
+          <Parameter Name="vehicleOwnerId" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ParkingModelStoreContainer">
+          <EntitySet Name="APPROVALS" EntityType="Self.APPROVALS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="APPROVALTYPES" EntityType="Self.APPROVALTYPES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BeforeCellphones" EntityType="Self.BeforeCellphones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BeforeTelephones" EntityType="Self.BeforeTelephones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COURSES" EntityType="Self.COURSES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACULTYS" EntityType="Self.FACULTYS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PERSONS" EntityType="Self.PERSONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STUDENTS" EntityType="Self.STUDENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TEACHERS" EntityType="Self.TEACHERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLES" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__APPROVALS__appro__4E88ABD4" Association="Self.FK__APPROVALS__appro__4E88ABD4">
+            <End Role="APPROVALTYPES" EntitySet="APPROVALTYPES" />
+            <End Role="APPROVALS" EntitySet="APPROVALS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__APPROVALS__appro__4F7CD00D" Association="Self.FK__APPROVALS__appro__4F7CD00D">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="APPROVALS" EntitySet="APPROVALS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__studen__59063A47" Association="Self.FK__STUDENTS__studen__59063A47">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__studen__59FA5E80" Association="Self.FK__STUDENTS__studen__59FA5E80">
+            <End Role="FACULTYS" EntitySet="FACULTYS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__teache__6754599E" Association="Self.FK__TEACHERS__teache__6754599E">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__teache__68487DD7" Association="Self.FK__TEACHERS__teache__68487DD7">
+            <End Role="FACULTYS" EntitySet="FACULTYS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLE__vehicle__47DBAE45" Association="Self.FK__VEHICLE__vehicle__47DBAE45">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ParkingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="APPROVAL">
+          <Key>
+            <PropertyRef Name="approvalNumber" />
+          </Key>
+          <Property Name="approvalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="approvalFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="approvalUntil" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="approvalPersonId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="approvalNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="APPROVALTYPE" Relationship="Self.FK__APPROVALS__appro__4E88ABD4" FromRole="APPROVALS" ToRole="APPROVALTYPES" />
+          <NavigationProperty Name="PERSON" Relationship="Self.FK__APPROVALS__appro__4F7CD00D" FromRole="APPROVALS" ToRole="PERSONS" />
+        </EntityType>
+        <EntityType Name="APPROVALTYPE">
+          <Key>
+            <PropertyRef Name="approvalCode" />
+          </Key>
+          <Property Name="approvalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="approvalName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="APPROVALS" Relationship="Self.FK__APPROVALS__appro__4E88ABD4" FromRole="APPROVALTYPES" ToRole="APPROVALS" />
+        </EntityType>
+        <EntityType Name="BeforeCellphone">
+          <Key>
+            <PropertyRef Name="beforeCellphone1" />
+          </Key>
+          <Property Name="beforeCellphone1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BeforeTelephone">
+          <Key>
+            <PropertyRef Name="beforeTelephone1" />
+          </Key>
+          <Property Name="beforeTelephone1" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="COURS">
+          <Key>
+            <PropertyRef Name="courseCode" />
+          </Key>
+          <Property Name="courseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="courseName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FACULTY">
+          <Key>
+            <PropertyRef Name="facultyCode" />
+          </Key>
+          <Property Name="facultyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="facultyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="facultyHead" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="STUDENTS" Relationship="Self.FK__STUDENTS__studen__59FA5E80" FromRole="FACULTYS" ToRole="STUDENTS" />
+          <NavigationProperty Name="TEACHERS" Relationship="Self.FK__TEACHERS__teache__68487DD7" FromRole="FACULTYS" ToRole="TEACHERS" />
+        </EntityType>
+        <EntityType Name="PERSON">
+          <Key>
+            <PropertyRef Name="personId" />
+          </Key>
+          <Property Name="personId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="personFirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="personLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="personBeforeTelephone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="personTelephone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="personBeforeCellphone" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="personCellphone" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="personCode" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="APPROVALS" Relationship="Self.FK__APPROVALS__appro__4F7CD00D" FromRole="PERSONS" ToRole="APPROVALS" />
+          <NavigationProperty Name="STUDENT" Relationship="Self.FK__STUDENTS__studen__59063A47" FromRole="PERSONS" ToRole="STUDENTS" />
+          <NavigationProperty Name="TEACHER" Relationship="Self.FK__TEACHERS__teache__6754599E" FromRole="PERSONS" ToRole="TEACHERS" />
+          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLE__vehicle__47DBAE45" FromRole="PERSONS" ToRole="VEHICLES" />
+        </EntityType>
+        <EntityType Name="STUDENT">
+          <Key>
+            <PropertyRef Name="studentId" />
+          </Key>
+          <Property Name="studentId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="studentFacultyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="studentYear" Type="Int32" Nullable="false" />
+          <Property Name="studentType" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__STUDENTS__studen__59FA5E80" FromRole="STUDENTS" ToRole="FACULTYS" />
+          <NavigationProperty Name="PERSON" Relationship="Self.FK__STUDENTS__studen__59063A47" FromRole="STUDENTS" ToRole="PERSONS" />
+        </EntityType>
+        <EntityType Name="TEACHER">
+          <Key>
+            <PropertyRef Name="teacherId" />
+          </Key>
+          <Property Name="teacherId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="teacherFacultyCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="teacherStage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FACULTY" Relationship="Self.FK__TEACHERS__teache__68487DD7" FromRole="TEACHERS" ToRole="FACULTYS" />
+          <NavigationProperty Name="PERSON" Relationship="Self.FK__TEACHERS__teache__6754599E" FromRole="TEACHERS" ToRole="PERSONS" />
+        </EntityType>
+        <EntityType Name="VEHICLE">
+          <Key>
+            <PropertyRef Name="vehicleNumber" />
+          </Key>
+          <Property Name="vehicleNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vehicleManufacturer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vehicleColor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="vehicleOwnerId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PERSON" Relationship="Self.FK__VEHICLE__vehicle__47DBAE45" FromRole="VEHICLES" ToRole="PERSONS" />
+        </EntityType>
+        <Association Name="FK__APPROVALS__appro__4E88ABD4">
+          <End Role="APPROVALTYPES" Type="Self.APPROVALTYPE" Multiplicity="1" />
+          <End Role="APPROVALS" Type="Self.APPROVAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="APPROVALTYPES">
+              <PropertyRef Name="approvalCode" />
+            </Principal>
+            <Dependent Role="APPROVALS">
+              <PropertyRef Name="approvalCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__APPROVALS__appro__4F7CD00D">
+          <End Role="PERSONS" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="APPROVALS" Type="Self.APPROVAL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="APPROVALS">
+              <PropertyRef Name="approvalPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__studen__59FA5E80">
+          <End Role="FACULTYS" Type="Self.FACULTY" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTYS">
+              <PropertyRef Name="facultyCode" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="studentFacultyCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__teache__68487DD7">
+          <End Role="FACULTYS" Type="Self.FACULTY" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACULTYS">
+              <PropertyRef Name="facultyCode" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="teacherFacultyCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STUDENTS__studen__59063A47">
+          <End Role="PERSONS" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="STUDENTS" Type="Self.STUDENT" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="STUDENTS">
+              <PropertyRef Name="studentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TEACHERS__teache__6754599E">
+          <End Role="PERSONS" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="TEACHERS" Type="Self.TEACHER" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="TEACHERS">
+              <PropertyRef Name="teacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLE__vehicle__47DBAE45">
+          <End Role="PERSONS" Type="Self.PERSON" Multiplicity="1" />
+          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PERSONS">
+              <PropertyRef Name="personId" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="vehicleOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParkingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="APPROVALS" EntityType="Self.APPROVAL" />
+          <EntitySet Name="APPROVALTYPES" EntityType="Self.APPROVALTYPE" />
+          <EntitySet Name="BeforeCellphones" EntityType="Self.BeforeCellphone" />
+          <EntitySet Name="BeforeTelephones" EntityType="Self.BeforeTelephone" />
+          <EntitySet Name="COURSES" EntityType="Self.COURS" />
+          <EntitySet Name="FACULTYS" EntityType="Self.FACULTY" />
+          <EntitySet Name="PERSONS" EntityType="Self.PERSON" />
+          <EntitySet Name="STUDENTS" EntityType="Self.STUDENT" />
+          <EntitySet Name="TEACHERS" EntityType="Self.TEACHER" />
+          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLE" />
+          <AssociationSet Name="FK__APPROVALS__appro__4E88ABD4" Association="Self.FK__APPROVALS__appro__4E88ABD4">
+            <End Role="APPROVALTYPES" EntitySet="APPROVALTYPES" />
+            <End Role="APPROVALS" EntitySet="APPROVALS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__APPROVALS__appro__4F7CD00D" Association="Self.FK__APPROVALS__appro__4F7CD00D">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="APPROVALS" EntitySet="APPROVALS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__studen__59FA5E80" Association="Self.FK__STUDENTS__studen__59FA5E80">
+            <End Role="FACULTYS" EntitySet="FACULTYS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__teache__68487DD7" Association="Self.FK__TEACHERS__teache__68487DD7">
+            <End Role="FACULTYS" EntitySet="FACULTYS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STUDENTS__studen__59063A47" Association="Self.FK__STUDENTS__studen__59063A47">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="STUDENTS" EntitySet="STUDENTS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TEACHERS__teache__6754599E" Association="Self.FK__TEACHERS__teache__6754599E">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="TEACHERS" EntitySet="TEACHERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLE__vehicle__47DBAE45" Association="Self.FK__VEHICLE__vehicle__47DBAE45">
+            <End Role="PERSONS" EntitySet="PERSONS" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <FunctionImport Name="AddApproval" ReturnType="Collection(ParkingModel.AddApproval_Result)">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+            <Parameter Name="approvalFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="approvalUntil" Mode="In" Type="DateTime" />
+            <Parameter Name="approvalPersonId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddApprovalType" ReturnType="Collection(ParkingModel.AddApprovalType_Result)">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+            <Parameter Name="approvalName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddCellphone" ReturnType="Collection(String)">
+            <Parameter Name="beforeCellphone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddCourse" ReturnType="Collection(ParkingModel.AddCourse_Result)">
+            <Parameter Name="courseCode" Mode="In" Type="String" />
+            <Parameter Name="courseName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddFaculty" ReturnType="Collection(ParkingModel.AddFaculty_Result)">
+            <Parameter Name="facultyCode" Mode="In" Type="String" />
+            <Parameter Name="facultyName" Mode="In" Type="String" />
+            <Parameter Name="facultyHead" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddStudent" ReturnType="Collection(ParkingModel.AddStudent_Result)">
+            <Parameter Name="personId" Mode="In" Type="String" />
+            <Parameter Name="personFirstName" Mode="In" Type="String" />
+            <Parameter Name="personLastName" Mode="In" Type="String" />
+            <Parameter Name="personBeforeTelephone" Mode="In" Type="String" />
+            <Parameter Name="personTelephone" Mode="In" Type="String" />
+            <Parameter Name="personBeforeCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCode" Mode="In" Type="Int32" />
+            <Parameter Name="studentId" Mode="In" Type="String" />
+            <Parameter Name="studentFacultyCode" Mode="In" Type="String" />
+            <Parameter Name="studentYear" Mode="In" Type="Int32" />
+            <Parameter Name="studentType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddTeacher" ReturnType="Collection(ParkingModel.AddTeacher_Result)">
+            <Parameter Name="personId" Mode="In" Type="String" />
+            <Parameter Name="personFirstName" Mode="In" Type="String" />
+            <Parameter Name="personLastName" Mode="In" Type="String" />
+            <Parameter Name="personBeforeTelephone" Mode="In" Type="String" />
+            <Parameter Name="personTelephone" Mode="In" Type="String" />
+            <Parameter Name="personBeforeCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCode" Mode="In" Type="Int32" />
+            <Parameter Name="teacherId" Mode="In" Type="String" />
+            <Parameter Name="teacherFacultyCode" Mode="In" Type="String" />
+            <Parameter Name="teacherStage" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddTelephone" ReturnType="Collection(String)">
+            <Parameter Name="beforeTelephone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddVehicle" ReturnType="Collection(ParkingModel.AddVehicle_Result)">
+            <Parameter Name="vehicleNumber" Mode="In" Type="String" />
+            <Parameter Name="vehicleManufacturer" Mode="In" Type="String" />
+            <Parameter Name="vehicleColor" Mode="In" Type="String" />
+            <Parameter Name="vehicleOwnerId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="checkIfIdExists" ReturnType="Collection(Int32)">
+            <Parameter Name="personId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteApprovalByNumber">
+            <Parameter Name="approvalNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteApprovalByPerson">
+            <Parameter Name="approvalPersonId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteApprovalType">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteCellphone">
+            <Parameter Name="beforeCellphone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteCourse">
+            <Parameter Name="courseCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteFaculty">
+            <Parameter Name="facultyCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeletePerson">
+            <Parameter Name="personId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteStudent">
+            <Parameter Name="studentId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteTeacher">
+            <Parameter Name="teacherId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteTelephone">
+            <Parameter Name="beforeTelephone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteVehicleByNumber">
+            <Parameter Name="vehicleNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteVehicleByOwnerId">
+            <Parameter Name="vehicleOwnerId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllApprovals" ReturnType="Collection(ParkingModel.GetAllApprovals_Result)" />
+          <FunctionImport Name="GetAllApprovalTypes" ReturnType="Collection(ParkingModel.GetAllApprovalTypes_Result)" />
+          <FunctionImport Name="GetAllCellphones" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetAllCourses" ReturnType="Collection(ParkingModel.GetAllCourses_Result)" />
+          <FunctionImport Name="GetAllFaculties" ReturnType="Collection(ParkingModel.GetAllFaculties_Result)" />
+          <FunctionImport Name="GetAllPersons" ReturnType="Collection(ParkingModel.GetAllPersons_Result)" />
+          <FunctionImport Name="GetAllPersonsId" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetAllStudents" ReturnType="Collection(ParkingModel.GetAllStudents_Result)" />
+          <FunctionImport Name="GetAllTeachers" ReturnType="Collection(ParkingModel.GetAllTeachers_Result)" />
+          <FunctionImport Name="GetAllTelephones" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetAllVehicleNumbers" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetAllVehicles" ReturnType="Collection(ParkingModel.GetAllVehicles_Result)" />
+          <FunctionImport Name="GetOneApprovalByCode" ReturnType="Collection(ParkingModel.GetOneApprovalByCode_Result)">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneApprovalByNumber" ReturnType="Collection(ParkingModel.GetOneApprovalByNumber_Result)">
+            <Parameter Name="approvalNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneApprovalByPersonId" ReturnType="Collection(ParkingModel.GetOneApprovalByPersonId_Result)">
+            <Parameter Name="approvalPersonId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneApprovalTypeByCode" ReturnType="Collection(ParkingModel.GetOneApprovalTypeByCode_Result)">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneApprovalTypeByName" ReturnType="Collection(ParkingModel.GetOneApprovalTypeByName_Result)">
+            <Parameter Name="approvalName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneBeforeCellphone" ReturnType="Collection(String)">
+            <Parameter Name="beforeCellphone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneBeforeTelephone" ReturnType="Collection(String)">
+            <Parameter Name="beforeTelephone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneCourseByCode" ReturnType="Collection(ParkingModel.GetOneCourseByCode_Result)">
+            <Parameter Name="courseCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneCourseByName" ReturnType="Collection(ParkingModel.GetOneCourseByName_Result)">
+            <Parameter Name="courseName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneFacultyByCode" ReturnType="Collection(ParkingModel.GetOneFacultyByCode_Result)">
+            <Parameter Name="facultyCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneFacultyByHead" ReturnType="Collection(ParkingModel.GetOneFacultyByHead_Result)">
+            <Parameter Name="facultyHead" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneFacultyByName" ReturnType="Collection(ParkingModel.GetOneFacultyByName_Result)">
+            <Parameter Name="facultyName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOnePersonById" ReturnType="Collection(ParkingModel.GetOnePersonById_Result)">
+            <Parameter Name="personId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneStudentById" ReturnType="Collection(ParkingModel.GetOneStudentById_Result)">
+            <Parameter Name="studentId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneTeacherById" ReturnType="Collection(ParkingModel.GetOneTeacherById_Result)">
+            <Parameter Name="teacherId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneVehicleByNumber" ReturnType="Collection(ParkingModel.GetOneVehicleByNumber_Result)">
+            <Parameter Name="vehicleNumber" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneVehicleByOwnerId" ReturnType="Collection(ParkingModel.GetOneVehicleByOwnerId_Result)">
+            <Parameter Name="vehicleOwnerId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateApproval" ReturnType="Collection(ParkingModel.UpdateApproval_Result)">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+            <Parameter Name="approvalFrom" Mode="In" Type="DateTime" />
+            <Parameter Name="approvalUntil" Mode="In" Type="DateTime" />
+            <Parameter Name="approvalPersonId" Mode="In" Type="String" />
+            <Parameter Name="approvalNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateApprovalType" ReturnType="Collection(ParkingModel.UpdateApprovalType_Result)">
+            <Parameter Name="approvalCode" Mode="In" Type="String" />
+            <Parameter Name="approvalName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateCellphone" ReturnType="Collection(String)">
+            <Parameter Name="beforeCellphone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateCourse" ReturnType="Collection(ParkingModel.UpdateCourse_Result)">
+            <Parameter Name="courseCode" Mode="In" Type="String" />
+            <Parameter Name="courseName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateFaculty" ReturnType="Collection(ParkingModel.UpdateFaculty_Result)">
+            <Parameter Name="facultyCode" Mode="In" Type="String" />
+            <Parameter Name="facultyName" Mode="In" Type="String" />
+            <Parameter Name="facultyHead" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateStudent" ReturnType="Collection(ParkingModel.UpdateStudent_Result)">
+            <Parameter Name="personId" Mode="In" Type="String" />
+            <Parameter Name="personFirstName" Mode="In" Type="String" />
+            <Parameter Name="personLastName" Mode="In" Type="String" />
+            <Parameter Name="personBeforeTelephone" Mode="In" Type="String" />
+            <Parameter Name="personTelephone" Mode="In" Type="String" />
+            <Parameter Name="personBeforeCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCode" Mode="In" Type="Int32" />
+            <Parameter Name="studentId" Mode="In" Type="String" />
+            <Parameter Name="studentFacultyCode" Mode="In" Type="String" />
+            <Parameter Name="studentYear" Mode="In" Type="Int32" />
+            <Parameter Name="studentType" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateTeacher" ReturnType="Collection(ParkingModel.UpdateTeacher_Result)">
+            <Parameter Name="personId" Mode="In" Type="String" />
+            <Parameter Name="personFirstName" Mode="In" Type="String" />
+            <Parameter Name="personLastName" Mode="In" Type="String" />
+            <Parameter Name="personBeforeTelephone" Mode="In" Type="String" />
+            <Parameter Name="personTelephone" Mode="In" Type="String" />
+            <Parameter Name="personBeforeCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCellphone" Mode="In" Type="String" />
+            <Parameter Name="personCode" Mode="In" Type="Int32" />
+            <Parameter Name="teacherId" Mode="In" Type="String" />
+            <Parameter Name="teacherFacultyCode" Mode="In" Type="String" />
+            <Parameter Name="teacherStage" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateTelephone" ReturnType="Collection(String)">
+            <Parameter Name="beforeTelephone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateVehicle" ReturnType="Collection(ParkingModel.UpdateVehicle_Result)">
+            <Parameter Name="vehicleNumber" Mode="In" Type="String" />
+            <Parameter Name="vehicleManufacturer" Mode="In" Type="String" />
+            <Parameter Name="vehicleColor" Mode="In" Type="String" />
+            <Parameter Name="vehicleOwnerId" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="AddApproval_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="approvalFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="approvalUntil" Nullable="false" Precision="23" />
+          <Property Type="String" Name="approvalPersonId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="approvalNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="AddApprovalType_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="approvalName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="AddCourse_Result">
+          <Property Type="String" Name="courseCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="courseName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="AddFaculty_Result">
+          <Property Type="String" Name="facultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyHead" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="AddStudent_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="studentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="studentFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="studentYear" Nullable="false" />
+          <Property Type="Int32" Name="studentType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="AddTeacher_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="teacherId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="teacherFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="teacherStage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="AddVehicle_Result">
+          <Property Type="String" Name="vehicleNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleManufacturer" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleColor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleOwnerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetAllApprovals_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="approvalFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="approvalUntil" Nullable="false" Precision="23" />
+          <Property Type="String" Name="approvalPersonId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="approvalNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllApprovalTypes_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="approvalName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetAllCourses_Result">
+          <Property Type="String" Name="courseCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="courseName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllFaculties_Result">
+          <Property Type="String" Name="facultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyHead" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllPersons_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllStudents_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="studentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="studentFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="studentYear" Nullable="false" />
+          <Property Type="Int32" Name="studentType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllTeachers_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="teacherId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="teacherFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="teacherStage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllVehicles_Result">
+          <Property Type="String" Name="vehicleNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleManufacturer" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleColor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleOwnerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetOneApprovalByCode_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="approvalFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="approvalUntil" Nullable="false" Precision="23" />
+          <Property Type="String" Name="approvalPersonId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="approvalNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOneApprovalByNumber_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="approvalFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="approvalUntil" Nullable="false" Precision="23" />
+          <Property Type="String" Name="approvalPersonId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="approvalNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOneApprovalByPersonId_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="approvalFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="approvalUntil" Nullable="false" Precision="23" />
+          <Property Type="String" Name="approvalPersonId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="approvalNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOneApprovalTypeByCode_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="approvalName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetOneApprovalTypeByName_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="approvalName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetOneCourseByCode_Result">
+          <Property Type="String" Name="courseCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="courseName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneCourseByName_Result">
+          <Property Type="String" Name="courseCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="courseName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneFacultyByCode_Result">
+          <Property Type="String" Name="facultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyHead" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneFacultyByHead_Result">
+          <Property Type="String" Name="facultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyHead" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneFacultyByName_Result">
+          <Property Type="String" Name="facultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyHead" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOnePersonById_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOneStudentById_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="studentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="studentFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="studentYear" Nullable="false" />
+          <Property Type="Int32" Name="studentType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOneTeacherById_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="teacherId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="teacherFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="teacherStage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetOneVehicleByNumber_Result">
+          <Property Type="String" Name="vehicleNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleManufacturer" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleColor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleOwnerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetOneVehicleByOwnerId_Result">
+          <Property Type="String" Name="vehicleNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleManufacturer" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleColor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleOwnerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="UpdateApproval_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="approvalFrom" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="approvalUntil" Nullable="false" Precision="23" />
+          <Property Type="String" Name="approvalPersonId" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="approvalNumber" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateApprovalType_Result">
+          <Property Type="String" Name="approvalCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="approvalName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="UpdateCourse_Result">
+          <Property Type="String" Name="courseCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="courseName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UpdateFaculty_Result">
+          <Property Type="String" Name="facultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="facultyHead" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UpdateStudent_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="studentId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="studentFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="studentYear" Nullable="false" />
+          <Property Type="Int32" Name="studentType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateTeacher_Result">
+          <Property Type="String" Name="personId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personBeforeTelephone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personTelephone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="personBeforeCellphone" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="personCellphone" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="personCode" Nullable="false" />
+          <Property Type="String" Name="teacherId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="teacherFacultyCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="teacherStage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="UpdateVehicle_Result">
+          <Property Type="String" Name="vehicleNumber" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleManufacturer" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleColor" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="vehicleOwnerId" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personFirstName" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="personLastName" Nullable="false" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ParkingModelStoreContainer" CdmEntityContainer="ParkingEntities">
+          <EntitySetMapping Name="APPROVALS">
+            <EntityTypeMapping TypeName="ParkingModel.APPROVAL">
+              <MappingFragment StoreEntitySet="APPROVALS">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="APPROVALTYPES">
+            <EntityTypeMapping TypeName="ParkingModel.APPROVALTYPE">
+              <MappingFragment StoreEntitySet="APPROVALTYPES">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalName" ColumnName="approvalName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BeforeCellphones">
+            <EntityTypeMapping TypeName="ParkingModel.BeforeCellphone">
+              <MappingFragment StoreEntitySet="BeforeCellphones">
+                <ScalarProperty Name="beforeCellphone1" ColumnName="beforeCellphone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BeforeTelephones">
+            <EntityTypeMapping TypeName="ParkingModel.BeforeTelephone">
+              <MappingFragment StoreEntitySet="BeforeTelephones">
+                <ScalarProperty Name="beforeTelephone1" ColumnName="beforeTelephone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COURSES">
+            <EntityTypeMapping TypeName="ParkingModel.COURS">
+              <MappingFragment StoreEntitySet="COURSES">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACULTYS">
+            <EntityTypeMapping TypeName="ParkingModel.FACULTY">
+              <MappingFragment StoreEntitySet="FACULTYS">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERSONS">
+            <EntityTypeMapping TypeName="ParkingModel.PERSON">
+              <MappingFragment StoreEntitySet="PERSONS">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STUDENTS">
+            <EntityTypeMapping TypeName="ParkingModel.STUDENT">
+              <MappingFragment StoreEntitySet="STUDENTS">
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="studentFacultyCode" ColumnName="studentFacultyCode" />
+                <ScalarProperty Name="studentYear" ColumnName="studentYear" />
+                <ScalarProperty Name="studentType" ColumnName="studentType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TEACHERS">
+            <EntityTypeMapping TypeName="ParkingModel.TEACHER">
+              <MappingFragment StoreEntitySet="TEACHERS">
+                <ScalarProperty Name="teacherId" ColumnName="teacherId" />
+                <ScalarProperty Name="teacherFacultyCode" ColumnName="teacherFacultyCode" />
+                <ScalarProperty Name="teacherStage" ColumnName="teacherStage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEHICLES">
+            <EntityTypeMapping TypeName="ParkingModel.VEHICLE">
+              <MappingFragment StoreEntitySet="VEHICLES">
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="vehicleManufacturer" ColumnName="vehicleManufacturer" />
+                <ScalarProperty Name="vehicleColor" ColumnName="vehicleColor" />
+                <ScalarProperty Name="vehicleOwnerId" ColumnName="vehicleOwnerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddApproval" FunctionName="ParkingModel.Store.AddApproval">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddApproval_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddApprovalType" FunctionName="ParkingModel.Store.AddApprovalType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddApprovalType_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalName" ColumnName="approvalName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddCellphone" FunctionName="ParkingModel.Store.AddCellphone" />
+          <FunctionImportMapping FunctionImportName="AddCourse" FunctionName="ParkingModel.Store.AddCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddCourse_Result">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddFaculty" FunctionName="ParkingModel.Store.AddFaculty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddFaculty_Result">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddStudent" FunctionName="ParkingModel.Store.AddStudent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddStudent_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="studentFacultyCode" ColumnName="studentFacultyCode" />
+                <ScalarProperty Name="studentYear" ColumnName="studentYear" />
+                <ScalarProperty Name="studentType" ColumnName="studentType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddTeacher" FunctionName="ParkingModel.Store.AddTeacher">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddTeacher_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="teacherId" ColumnName="teacherId" />
+                <ScalarProperty Name="teacherFacultyCode" ColumnName="teacherFacultyCode" />
+                <ScalarProperty Name="teacherStage" ColumnName="teacherStage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddTelephone" FunctionName="ParkingModel.Store.AddTelephone" />
+          <FunctionImportMapping FunctionImportName="AddVehicle" FunctionName="ParkingModel.Store.AddVehicle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.AddVehicle_Result">
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="vehicleManufacturer" ColumnName="vehicleManufacturer" />
+                <ScalarProperty Name="vehicleColor" ColumnName="vehicleColor" />
+                <ScalarProperty Name="vehicleOwnerId" ColumnName="vehicleOwnerId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="checkIfIdExists" FunctionName="ParkingModel.Store.checkIfIdExists" />
+          <FunctionImportMapping FunctionImportName="DeleteApprovalByNumber" FunctionName="ParkingModel.Store.DeleteApprovalByNumber" />
+          <FunctionImportMapping FunctionImportName="DeleteApprovalByPerson" FunctionName="ParkingModel.Store.DeleteApprovalByPerson" />
+          <FunctionImportMapping FunctionImportName="DeleteApprovalType" FunctionName="ParkingModel.Store.DeleteApprovalType" />
+          <FunctionImportMapping FunctionImportName="DeleteCellphone" FunctionName="ParkingModel.Store.DeleteCellphone" />
+          <FunctionImportMapping FunctionImportName="DeleteCourse" FunctionName="ParkingModel.Store.DeleteCourse" />
+          <FunctionImportMapping FunctionImportName="DeleteFaculty" FunctionName="ParkingModel.Store.DeleteFaculty" />
+          <FunctionImportMapping FunctionImportName="DeletePerson" FunctionName="ParkingModel.Store.DeletePerson" />
+          <FunctionImportMapping FunctionImportName="DeleteStudent" FunctionName="ParkingModel.Store.DeleteStudent" />
+          <FunctionImportMapping FunctionImportName="DeleteTeacher" FunctionName="ParkingModel.Store.DeleteTeacher" />
+          <FunctionImportMapping FunctionImportName="DeleteTelephone" FunctionName="ParkingModel.Store.DeleteTelephone" />
+          <FunctionImportMapping FunctionImportName="DeleteVehicleByNumber" FunctionName="ParkingModel.Store.DeleteVehicleByNumber" />
+          <FunctionImportMapping FunctionImportName="DeleteVehicleByOwnerId" FunctionName="ParkingModel.Store.DeleteVehicleByOwnerId" />
+          <FunctionImportMapping FunctionImportName="GetAllApprovals" FunctionName="ParkingModel.Store.GetAllApprovals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllApprovals_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllApprovalTypes" FunctionName="ParkingModel.Store.GetAllApprovalTypes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllApprovalTypes_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalName" ColumnName="approvalName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllCellphones" FunctionName="ParkingModel.Store.GetAllCellphones" />
+          <FunctionImportMapping FunctionImportName="GetAllCourses" FunctionName="ParkingModel.Store.GetAllCourses">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllCourses_Result">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllFaculties" FunctionName="ParkingModel.Store.GetAllFaculties">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllFaculties_Result">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllPersons" FunctionName="ParkingModel.Store.GetAllPersons">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllPersons_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllPersonsId" FunctionName="ParkingModel.Store.GetAllPersonsId" />
+          <FunctionImportMapping FunctionImportName="GetAllStudents" FunctionName="ParkingModel.Store.GetAllStudents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllStudents_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="studentFacultyCode" ColumnName="studentFacultyCode" />
+                <ScalarProperty Name="studentYear" ColumnName="studentYear" />
+                <ScalarProperty Name="studentType" ColumnName="studentType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllTeachers" FunctionName="ParkingModel.Store.GetAllTeachers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllTeachers_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="teacherId" ColumnName="teacherId" />
+                <ScalarProperty Name="teacherFacultyCode" ColumnName="teacherFacultyCode" />
+                <ScalarProperty Name="teacherStage" ColumnName="teacherStage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllTelephones" FunctionName="ParkingModel.Store.GetAllTelephones" />
+          <FunctionImportMapping FunctionImportName="GetAllVehicleNumbers" FunctionName="ParkingModel.Store.GetAllVehicleNumbers" />
+          <FunctionImportMapping FunctionImportName="GetAllVehicles" FunctionName="ParkingModel.Store.GetAllVehicles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetAllVehicles_Result">
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="vehicleManufacturer" ColumnName="vehicleManufacturer" />
+                <ScalarProperty Name="vehicleColor" ColumnName="vehicleColor" />
+                <ScalarProperty Name="vehicleOwnerId" ColumnName="vehicleOwnerId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneApprovalByCode" FunctionName="ParkingModel.Store.GetOneApprovalByCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneApprovalByCode_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneApprovalByNumber" FunctionName="ParkingModel.Store.GetOneApprovalByNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneApprovalByNumber_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneApprovalByPersonId" FunctionName="ParkingModel.Store.GetOneApprovalByPersonId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneApprovalByPersonId_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneApprovalTypeByCode" FunctionName="ParkingModel.Store.GetOneApprovalTypeByCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneApprovalTypeByCode_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalName" ColumnName="approvalName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneApprovalTypeByName" FunctionName="ParkingModel.Store.GetOneApprovalTypeByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneApprovalTypeByName_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalName" ColumnName="approvalName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneBeforeCellphone" FunctionName="ParkingModel.Store.GetOneBeforeCellphone" />
+          <FunctionImportMapping FunctionImportName="GetOneBeforeTelephone" FunctionName="ParkingModel.Store.GetOneBeforeTelephone" />
+          <FunctionImportMapping FunctionImportName="GetOneCourseByCode" FunctionName="ParkingModel.Store.GetOneCourseByCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneCourseByCode_Result">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneCourseByName" FunctionName="ParkingModel.Store.GetOneCourseByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneCourseByName_Result">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneFacultyByCode" FunctionName="ParkingModel.Store.GetOneFacultyByCode">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneFacultyByCode_Result">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneFacultyByHead" FunctionName="ParkingModel.Store.GetOneFacultyByHead">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneFacultyByHead_Result">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneFacultyByName" FunctionName="ParkingModel.Store.GetOneFacultyByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneFacultyByName_Result">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOnePersonById" FunctionName="ParkingModel.Store.GetOnePersonById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOnePersonById_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneStudentById" FunctionName="ParkingModel.Store.GetOneStudentById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneStudentById_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="studentFacultyCode" ColumnName="studentFacultyCode" />
+                <ScalarProperty Name="studentYear" ColumnName="studentYear" />
+                <ScalarProperty Name="studentType" ColumnName="studentType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneTeacherById" FunctionName="ParkingModel.Store.GetOneTeacherById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneTeacherById_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="teacherId" ColumnName="teacherId" />
+                <ScalarProperty Name="teacherFacultyCode" ColumnName="teacherFacultyCode" />
+                <ScalarProperty Name="teacherStage" ColumnName="teacherStage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneVehicleByNumber" FunctionName="ParkingModel.Store.GetOneVehicleByNumber">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneVehicleByNumber_Result">
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="vehicleManufacturer" ColumnName="vehicleManufacturer" />
+                <ScalarProperty Name="vehicleColor" ColumnName="vehicleColor" />
+                <ScalarProperty Name="vehicleOwnerId" ColumnName="vehicleOwnerId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneVehicleByOwnerId" FunctionName="ParkingModel.Store.GetOneVehicleByOwnerId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.GetOneVehicleByOwnerId_Result">
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="vehicleManufacturer" ColumnName="vehicleManufacturer" />
+                <ScalarProperty Name="vehicleColor" ColumnName="vehicleColor" />
+                <ScalarProperty Name="vehicleOwnerId" ColumnName="vehicleOwnerId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateApproval" FunctionName="ParkingModel.Store.UpdateApproval">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateApproval_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalFrom" ColumnName="approvalFrom" />
+                <ScalarProperty Name="approvalUntil" ColumnName="approvalUntil" />
+                <ScalarProperty Name="approvalPersonId" ColumnName="approvalPersonId" />
+                <ScalarProperty Name="approvalNumber" ColumnName="approvalNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateApprovalType" FunctionName="ParkingModel.Store.UpdateApprovalType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateApprovalType_Result">
+                <ScalarProperty Name="approvalCode" ColumnName="approvalCode" />
+                <ScalarProperty Name="approvalName" ColumnName="approvalName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateCellphone" FunctionName="ParkingModel.Store.UpdateCellphone" />
+          <FunctionImportMapping FunctionImportName="UpdateCourse" FunctionName="ParkingModel.Store.UpdateCourse">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateCourse_Result">
+                <ScalarProperty Name="courseCode" ColumnName="courseCode" />
+                <ScalarProperty Name="courseName" ColumnName="courseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateFaculty" FunctionName="ParkingModel.Store.UpdateFaculty">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateFaculty_Result">
+                <ScalarProperty Name="facultyCode" ColumnName="facultyCode" />
+                <ScalarProperty Name="facultyName" ColumnName="facultyName" />
+                <ScalarProperty Name="facultyHead" ColumnName="facultyHead" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateStudent" FunctionName="ParkingModel.Store.UpdateStudent">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateStudent_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="studentId" ColumnName="studentId" />
+                <ScalarProperty Name="studentFacultyCode" ColumnName="studentFacultyCode" />
+                <ScalarProperty Name="studentYear" ColumnName="studentYear" />
+                <ScalarProperty Name="studentType" ColumnName="studentType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateTeacher" FunctionName="ParkingModel.Store.UpdateTeacher">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateTeacher_Result">
+                <ScalarProperty Name="personId" ColumnName="personId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+                <ScalarProperty Name="personBeforeTelephone" ColumnName="personBeforeTelephone" />
+                <ScalarProperty Name="personTelephone" ColumnName="personTelephone" />
+                <ScalarProperty Name="personBeforeCellphone" ColumnName="personBeforeCellphone" />
+                <ScalarProperty Name="personCellphone" ColumnName="personCellphone" />
+                <ScalarProperty Name="personCode" ColumnName="personCode" />
+                <ScalarProperty Name="teacherId" ColumnName="teacherId" />
+                <ScalarProperty Name="teacherFacultyCode" ColumnName="teacherFacultyCode" />
+                <ScalarProperty Name="teacherStage" ColumnName="teacherStage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateTelephone" FunctionName="ParkingModel.Store.UpdateTelephone" />
+          <FunctionImportMapping FunctionImportName="UpdateVehicle" FunctionName="ParkingModel.Store.UpdateVehicle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ParkingModel.UpdateVehicle_Result">
+                <ScalarProperty Name="vehicleNumber" ColumnName="vehicleNumber" />
+                <ScalarProperty Name="vehicleManufacturer" ColumnName="vehicleManufacturer" />
+                <ScalarProperty Name="vehicleColor" ColumnName="vehicleColor" />
+                <ScalarProperty Name="vehicleOwnerId" ColumnName="vehicleOwnerId" />
+                <ScalarProperty Name="personFirstName" ColumnName="personFirstName" />
+                <ScalarProperty Name="personLastName" ColumnName="personLastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

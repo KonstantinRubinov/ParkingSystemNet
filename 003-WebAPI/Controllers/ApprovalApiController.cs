@@ -12,20 +12,10 @@ namespace ParkingSystem
 	public class ApprovalApiController : ApiController
     {
 		private IApprovalRepository approvalRepository;
-		public ApprovalApiController()
+		public ApprovalApiController(IApprovalRepository _approvalRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				approvalRepository = new EntityApprovalManager();
-			else if (GlobalVariable.logicType == 1)
-				approvalRepository = new SqlApprovalManager();
-			else if (GlobalVariable.logicType == 2)
-				approvalRepository = new MySqlApprovalManager();
-			else if (GlobalVariable.logicType == 3)
-				approvalRepository = new InnerApprovalManager();
-			else
-				approvalRepository = new MongoApprovalManager();
+			approvalRepository = _approvalRepository;
 		}
-
 
 		[HttpGet]
 		[Route("approvals")]
@@ -85,7 +75,6 @@ namespace ParkingSystem
 			}
 		}
 
-
 		[HttpPut]
 		[Route("approvals/{approvalCode}")]
 		public HttpResponseMessage UpdateApproval(int approvalNumber, ApprovalModel approvalModel)
@@ -120,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = approvalRepository.DeleteApproval(approvalNumber);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{

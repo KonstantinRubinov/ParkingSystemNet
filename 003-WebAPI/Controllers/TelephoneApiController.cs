@@ -12,18 +12,9 @@ namespace ParkingSystem
 	public class TelephoneApiController : ApiController
     {
 		private ITelephoneRepository telephoneRepository;
-		public TelephoneApiController()
+		public TelephoneApiController(ITelephoneRepository _telephoneRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				telephoneRepository = new EntityTelephoneManager();
-			else if (GlobalVariable.logicType == 1)
-				telephoneRepository = new SqlTelephoneManager();
-			else if (GlobalVariable.logicType == 2)
-				telephoneRepository = new MySqlTelephoneManager();
-			else if (GlobalVariable.logicType == 3)
-				telephoneRepository = new InnerTelephoneManager();
-			else
-				telephoneRepository = new MongoTelephoneManager();
+			telephoneRepository = _telephoneRepository;
 		}
 
 		[HttpGet]
@@ -118,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = telephoneRepository.DeleteTelephone(beforeTelephone);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{

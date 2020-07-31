@@ -12,18 +12,9 @@ namespace ParkingSystem
 	public class CellphoneApiController : ApiController
     {
 		private ICellphoneRepository cellphoneRepository;
-		public CellphoneApiController()
+		public CellphoneApiController(ICellphoneRepository _cellphoneRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				cellphoneRepository = new EntityCellphoneManager();
-			else if (GlobalVariable.logicType == 1)
-				cellphoneRepository = new SqlCellphoneManager();
-			else if (GlobalVariable.logicType == 2)
-				cellphoneRepository = new MySqlCellphoneManager();
-			else if (GlobalVariable.logicType == 3)
-				cellphoneRepository = new InnerCellphoneManager();
-			else
-				cellphoneRepository = new MongoCellphoneManager();
+			cellphoneRepository = _cellphoneRepository;
 		}
 
 		[HttpGet]
@@ -84,7 +75,6 @@ namespace ParkingSystem
 			}
 		}
 
-
 		[HttpPut]
 		[Route("cellphones/{beforeCellphone}")]
 		public HttpResponseMessage UpdateCellphone(string beforeCellphone, CellphoneModel cellphoneModel)
@@ -119,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = cellphoneRepository.DeleteCellphone(beforeCellphone);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{

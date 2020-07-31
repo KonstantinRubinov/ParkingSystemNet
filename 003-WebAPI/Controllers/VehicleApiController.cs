@@ -12,20 +12,10 @@ namespace ParkingSystem
 	public class VehicleApiController : ApiController
     {
 		private IVehicleRepository vehicleRepository;
-		public VehicleApiController()
+		public VehicleApiController(IVehicleRepository _vehicleRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				vehicleRepository = new EntityVehicleManager();
-			else if (GlobalVariable.logicType == 1)
-				vehicleRepository = new SqlVehicleManager();
-			else if (GlobalVariable.logicType == 2)
-				vehicleRepository = new MySqlVehicleManager();
-			else if (GlobalVariable.logicType == 3)
-				vehicleRepository = new InnerVehicleManager();
-			else
-				vehicleRepository = new MongoVehicleManager();
+			vehicleRepository = _vehicleRepository;
 		}
-
 
 		[HttpGet]
 		[Route("vehicles/number")]
@@ -128,7 +118,6 @@ namespace ParkingSystem
 			}
 		}
 
-
 		[HttpDelete]
 		[Route("vehicles/{vehicleNumber}")]
 		public HttpResponseMessage DeleteVehicle(string vehicleNumber)
@@ -136,12 +125,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = vehicleRepository.DeleteVehicleByNumber(vehicleNumber);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{
@@ -149,6 +133,5 @@ namespace ParkingSystem
 				return Request.CreateResponse(HttpStatusCode.InternalServerError, errors);
 			}
 		}
-
 	}
 }

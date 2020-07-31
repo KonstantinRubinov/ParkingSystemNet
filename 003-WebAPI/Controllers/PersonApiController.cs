@@ -15,40 +15,12 @@ namespace ParkingSystem
 		private IStudentRepository studentRepository;
 		private ITeacherRepository teacherRepository;
 
-		public PersonApiController()
+		public PersonApiController(IPersonRepository _personRepository, IStudentRepository _studentRepository, ITeacherRepository _teacherRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-			{
-				personRepository = new EntityPersonManager();
-				studentRepository = new EntityStudentManager();
-				teacherRepository = new EntityTeacherManager();
-			}
-			else if (GlobalVariable.logicType == 1)
-			{
-				personRepository = new SqlPersonManager();
-				studentRepository = new SqlStudentManager();
-				teacherRepository = new SqlTeacherManager();
-			}
-			else if (GlobalVariable.logicType == 2)
-			{
-				personRepository = new MySqlPersonManager();
-				studentRepository = new MySqlStudentManager();
-				teacherRepository = new MySqlTeacherManager();
-			}
-			else if (GlobalVariable.logicType == 3)
-			{
-				personRepository = new InnerPersonManager();
-				studentRepository = new InnerStudentManager();
-				teacherRepository = new InnerTeacherManager();
-			}
-			else
-			{
-				personRepository = new MongoPersonManager();
-				studentRepository = new MongoStudentManager();
-				teacherRepository = new MongoTeacherManager();
-			}
+			personRepository = _personRepository;
+			studentRepository = _studentRepository;
+			teacherRepository = _teacherRepository;
 		}
-
 
 		[HttpGet]
 		[Route("persons")]
@@ -89,12 +61,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = personRepository.DeletePerson(personId);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{
@@ -120,7 +87,6 @@ namespace ParkingSystem
 				}
 				return Request.CreateResponse(HttpStatusCode.OK, personModel);
 			}
-
 			catch (Exception ex)
 			{
 				Errors errors = ErrorsHelper.GetErrors(ex);

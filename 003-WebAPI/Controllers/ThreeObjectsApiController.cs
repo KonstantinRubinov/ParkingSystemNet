@@ -12,20 +12,10 @@ namespace ParkingSystem
 	public class ThreeObjectsApiController : ApiController
     {
 		private IThreeObjectsRepository threeObjectsRepository;
-		public ThreeObjectsApiController()
+		public ThreeObjectsApiController(IThreeObjectsRepository _threeObjectsRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				threeObjectsRepository = new EntityThreeObjectsManager();
-			else if (GlobalVariable.logicType == 1)
-				threeObjectsRepository = new SqlThreeObjectsManager();
-			else if (GlobalVariable.logicType == 2)
-				threeObjectsRepository = new MySqlThreeObjectsManager();
-			else if (GlobalVariable.logicType == 3)
-				threeObjectsRepository = new InnerThreeObjectsManager();
-			else
-				threeObjectsRepository = new MongoThreeObjectsManager();
+			threeObjectsRepository = _threeObjectsRepository;
 		}
-
 
 		[HttpGet]
 		[Route("threeObjects")]
@@ -121,12 +111,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = threeObjectsRepository.DeleteThreeObjects(personId);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{

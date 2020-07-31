@@ -12,20 +12,10 @@ namespace ParkingSystem
 	public class FacultyApiController : ApiController
     {
 		private IFacultyRepository facultyRepository;
-		public FacultyApiController()
+		public FacultyApiController(IFacultyRepository _facultyRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				facultyRepository = new EntityFacultyManager();
-			else if (GlobalVariable.logicType == 1)
-				facultyRepository = new SqlFacultyManager();
-			else if (GlobalVariable.logicType == 2)
-				facultyRepository = new MySqlFacultyManager();
-			else if (GlobalVariable.logicType == 3)
-				facultyRepository = new InnerFacultyManager();
-			else
-				facultyRepository = new MongoFacultyManager();
+			facultyRepository = _facultyRepository;
 		}
-
 
 		[HttpGet]
 		[Route("faculties")]
@@ -112,8 +102,6 @@ namespace ParkingSystem
 			}
 		}
 
-
-
 		[HttpDelete]
 		[Route("faculties/{facultyCode}")]
 		public HttpResponseMessage DeleteFaculty(string facultyCode)
@@ -121,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = facultyRepository.DeleteFaculty(facultyCode);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{

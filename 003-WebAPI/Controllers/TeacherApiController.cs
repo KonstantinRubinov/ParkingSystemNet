@@ -12,20 +12,10 @@ namespace ParkingSystem
 	public class TeacherApiController : ApiController
     {
 		private ITeacherRepository teacherRepository;
-		public TeacherApiController()
+		public TeacherApiController(ITeacherRepository _teacherRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				teacherRepository = new EntityTeacherManager();
-			else if (GlobalVariable.logicType == 1)
-				teacherRepository = new SqlTeacherManager();
-			else if (GlobalVariable.logicType == 2)
-				teacherRepository = new MySqlTeacherManager();
-			else if (GlobalVariable.logicType == 3)
-				teacherRepository = new InnerTeacherManager();
-			else
-				teacherRepository = new MongoTeacherManager();
+			teacherRepository = _teacherRepository;
 		}
-
 
 		[HttpGet]
 		[Route("teachers")]
@@ -43,7 +33,6 @@ namespace ParkingSystem
 			}
 		}
 
-
 		[HttpGet]
 		[Route("teachers/{teacherId}")]
 		public HttpResponseMessage GetOneTeacherById(string teacherId)
@@ -59,8 +48,6 @@ namespace ParkingSystem
 				return Request.CreateResponse(HttpStatusCode.InternalServerError, errors);
 			}
 		}
-
-
 
 		[HttpPost]
 		[Route("teachers")]
@@ -87,8 +74,6 @@ namespace ParkingSystem
 				return Request.CreateResponse(HttpStatusCode.InternalServerError, errors);
 			}
 		}
-
-
 
 		[HttpPut]
 		[Route("teachers/{teacherId}")]
@@ -117,7 +102,6 @@ namespace ParkingSystem
 			}
 		}
 
-
 		[HttpDelete]
 		[Route("teachers/{teacherId}")]
 		public HttpResponseMessage DeleteTeacher(string teacherId)
@@ -125,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = teacherRepository.DeleteTeacher(teacherId);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{

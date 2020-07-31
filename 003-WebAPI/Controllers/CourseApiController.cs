@@ -12,18 +12,9 @@ namespace ParkingSystem
 	public class CourseApiController : ApiController
     {
 		private ICourseRepository courseRepository;
-		public CourseApiController()
+		public CourseApiController(ICourseRepository _courseRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				courseRepository = new EntityCourseManager();
-			else if (GlobalVariable.logicType == 1)
-				courseRepository = new SqlCourseManager();
-			else if (GlobalVariable.logicType == 2)
-				courseRepository = new MySqlCourseManager();
-			else if (GlobalVariable.logicType == 3)
-				courseRepository = new InnerCourseManager();
-			else
-				courseRepository = new MongoCourseManager();
+			courseRepository = _courseRepository;
 		}
 
 		[HttpGet]
@@ -58,7 +49,6 @@ namespace ParkingSystem
 			}
 		}
 
-
 		[HttpPost]
 		[Route("courses")]
 		public HttpResponseMessage AddCourse(CourseModel courseModel)
@@ -84,7 +74,6 @@ namespace ParkingSystem
 				return Request.CreateResponse(HttpStatusCode.InternalServerError, errors);
 			}
 		}
-
 
 		[HttpPut]
 		[Route("courses/{courseCode}")]
@@ -120,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = courseRepository.DeleteCourse(courseCode);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{
@@ -133,6 +117,5 @@ namespace ParkingSystem
 				return Request.CreateResponse(HttpStatusCode.InternalServerError, errors);
 			}
 		}
-
 	}
 }

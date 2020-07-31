@@ -12,20 +12,10 @@ namespace ParkingSystem
 	public class StudentApiController : ApiController
     {
 		private IStudentRepository studentRepository;
-		public StudentApiController()
+		public StudentApiController(IStudentRepository _studentRepository)
 		{
-			if (GlobalVariable.logicType == 0)
-				studentRepository = new EntityStudentManager();
-			else if (GlobalVariable.logicType == 1)
-				studentRepository = new SqlStudentManager();
-			else if (GlobalVariable.logicType == 2)
-				studentRepository = new MySqlStudentManager();
-			else if (GlobalVariable.logicType == 3)
-				studentRepository = new InnerStudentManager();
-			else
-				studentRepository = new MongoStudentManager();
+			studentRepository = _studentRepository;
 		}
-
 
 		[HttpGet]
 		[Route("students")]
@@ -119,12 +109,7 @@ namespace ParkingSystem
 			try
 			{
 				int i = studentRepository.DeleteStudent(studentId);
-				if (i > 0)
-				{
-					return Request.CreateResponse(HttpStatusCode.NoContent);
-				}
-				return Request.CreateResponse(HttpStatusCode.InternalServerError);
-
+				return Request.CreateResponse(HttpStatusCode.NoContent);
 			}
 			catch (Exception ex)
 			{
